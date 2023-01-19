@@ -19,11 +19,9 @@ const CocktailDetail = () => {
 
   return (
     <div>
-      <div>
-        {id}
-      </div>
-        {data&&data.strDrink}
-      </div>
+        <h1>{data&&data.strDrink}</h1>
+        <img src={data&&data.strDrinkThumb} alt="" />
+    </div>
   )
 }
 
