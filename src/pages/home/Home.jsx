@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import "./home.css"
 import { GlobalContext } from "../../context/GlobalState";
+import GetCategories from "../../components/GetCategories";
+import GetRandom from "../../components/GetRandom";
+import GetSearch from "../../components/GetSearch";
 
 const Home = () => {
   const{changeLanguage, language} = useContext(GlobalContext)
@@ -22,14 +25,9 @@ const Home = () => {
           <h3>{language}</h3>
         </section>
         <section>
-          <h3>Get the categories</h3>
-          <div></div>
-          <h3>Choose for me</h3>
-          <div></div>
-          <h3>Search for a specific cocktail</h3>
-          <div>
-            <input type="text" />
-          </div>
+          <GetCategories/>
+          <GetRandom/>
+          <GetSearch/>
         </section>
       </main>
     </>
