@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { Link } from 'react-router-dom'
 
 const GetRandom = () => {
     const [data,setData]=useState(null)
@@ -16,11 +17,11 @@ const GetRandom = () => {
   return (
     <div>
         <h3 onClick={()=>getRandom()}>Get Random</h3>
-        <div>
+         <Link to={"/cocktail-detail"} state={data&&data[0].idDrink}>
             {
-            data!==null&&data[0].strDrink
+                data!==null&&data[0].strDrink
             }
-        </div>
+        </Link>  
     </div>
   )
 }
