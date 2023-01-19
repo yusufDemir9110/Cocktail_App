@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { Link } from 'react-router-dom'
 
 const GetSearch = () => {
     const [data,setData]=useState(null)
@@ -20,11 +21,17 @@ const GetSearch = () => {
             <input type="text" onChange={(e)=>setKeyword(e.target.value)}/>
             <button type="button" onClick={()=>getSearch()}>Get</button>
           </div>
-          <div>
+          <ul>
             {
-            data!==null?data.map(data=>(<div>{data.strDrink}</div>)):null
+              data!==null?data.map(data=>(
+                <li key={data.idDrink}>
+                  <Link to="/cocktail-detail" state={data.idDrink}>
+                    {data.strDrink}
+                  </Link>
+                </li>
+              )):null
             }
-        </div>
+        </ul>
     </div>
   )
 }
