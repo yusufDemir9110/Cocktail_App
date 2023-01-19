@@ -4,25 +4,25 @@ import { useLocation } from 'react-router-dom'
 const CocktailDetail = () => {
   const [data, setData] = useState(null)
   const location = useLocation()
-  const keyword = location.state
-  useEffect(() => {
+  const id = location.state
   const fetchData = async () => {
       const res = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${keyword}`,
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`,
       );
       const json = await res.json();
       setData(json.drinks[0]);
-      console.log(data)
-    };
-    fetchData()
-  }, [])
-  
+  };
+  useEffect(()=>{
+    const newData = fetchData()
+    setData(newData)
+  },[])
+
   return (
     <div>
       <div>
-        {data.idDrink}
+        {id}
       </div>
-      
+        {data&&data.strDrink}
       </div>
   )
 }
