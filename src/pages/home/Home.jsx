@@ -22,11 +22,19 @@ const Home = () => {
     changeBartender(bartender)
     setActiveSection(1)
   }
+  const gotoPrevious=()=>{
+    setActiveSection(activeSection-1)
+  }
   return (
     <div className="container center">
       <video className="backgroundVideo" src={lemonVideo} autoPlay loop muted></video>
       <div className="videoOverlay"></div>
       <main className="appContainer center">
+        {
+          activeSection!==0&&
+          <button className="btn topRightBtn" onClick={()=>gotoPrevious()}>Previous</button>
+        }
+        
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>
         
         {

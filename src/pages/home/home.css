@@ -47,6 +47,13 @@ body {
     color:white;
     flex-direction: column;
     padding: 0 1rem;
+    position: relative;
+}
+
+.topRightBtn{
+    position: absolute;
+    left:1rem;
+    top:1rem;
 }
 .appTitle{
     background-clip: text;

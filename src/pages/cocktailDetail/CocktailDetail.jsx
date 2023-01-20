@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import charlotte from "../../assests/charlotte.png"
 import giancarlo from "../../assests/giancarlo.png"
 import julia from "../../assests/julia.png"
@@ -11,6 +11,7 @@ import "./cocktailDetail.css"
 const CocktailDetail = () => {
   const [data, setData] = useState(null)
   const location = useLocation()
+  const navigate = useNavigate()
   const id = location.state
   const{changeBartender, bartender} = useContext(GlobalContext)
   const fetchData = async () => {
@@ -20,6 +21,11 @@ const CocktailDetail = () => {
       const json = await res.json();
       setData(json.drinks[0]);
   };
+
+  const gotoHome=()=>{
+    navigate("/")
+  }
+
   useEffect(()=>{
     const newData = fetchData()
     setData(newData)
@@ -30,6 +36,7 @@ const CocktailDetail = () => {
       <video className="backgroundVideo" src={lemonVideo} autoPlay loop muted></video>
       <div className="videoOverlay"></div>
       <main className="appContainer center">
+        <button className="btn topRightBtn" onClick={()=>gotoHome()}>Go to Home</button>
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>
         
         <section className="explanationSection">
