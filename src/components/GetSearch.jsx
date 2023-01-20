@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../context/GlobalState';
 
 
 const GetSearch = () => {
+    const {bartender} = useContext(GlobalContext)
     const [data,setData]=useState(null)
     const [keyword, setKeyword] = useState("")
     const [inputVisible, setInputVisible] = useState(false)
@@ -20,7 +22,7 @@ const GetSearch = () => {
     };
   return (
     <div className='dataPullingContainer searchContainer'>
-        <button className='btn searchSpecific' onClick={()=>setInputVisible(true)}>Search for a specific cocktail</button>
+        <button className='btn searchSpecific' onClick={()=>setInputVisible(true)}>{bartender==="Charlotte"?"Search Drink":bartender==="Giancarlo"?"Cerca Bevanda":"Getränk suchen"}</button>
         {
           inputVisible&&
           <div className='center'>

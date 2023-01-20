@@ -13,17 +13,30 @@ import italian from "../../assests/Italy-Flag-icon.png"
 import german from "../../assests/Germany-Flag-icon.png"
 import { explanation } from "../../explanation/explanation";
 
+
 const Home = () => {
-  const{changeBartender, bartender} = useContext(GlobalContext)
+  const {changeBartender, bartender, changeUserName, userName} = useContext(GlobalContext)
   const [activeSection, setActiveSection] = useState(0)
-  const [userName, setUserName]= useState("customer")
-  const [explanationVisibility, setExplanationVisibility] = useState("none")
+  const [explanationVisible, setExplanationVisible] = useState("none")
+  const [explanation2Visible, setExplanation2Visible] = useState("none")
+  const [answer,setAnswer] = useState("")
   const selectBartender =(bartender)=>{
     changeBartender(bartender)
     setActiveSection(1)
   }
   const gotoPrevious=()=>{
     setActiveSection(activeSection-1)
+    setExplanationVisible("none")
+    setExplanation2Visible("none")
+    changeUserName("Customer")
+  }
+  const clickYes=()=>{
+    setExplanation2Visible("block")
+    setAnswer("yes")
+  }
+   const clickNo=()=>{
+    setExplanation2Visible("block")
+    setAnswer("no")
   }
   return (
     <div className="container center">
@@ -32,7 +45,7 @@ const Home = () => {
       <main className="appContainer center">
         {
           activeSection!==0&&
-          <button className="btn topRightBtn" onClick={()=>gotoPrevious()}>Previous</button>
+          <button className="btn topRightBtn" onClick={()=>gotoPrevious()}>{bartender==="Charlotte"?"Previous":bartender==="Giancarlo"?"Precedente":"Vorherige"}</button>
         }
         
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>
@@ -80,17 +93,21 @@ const Home = () => {
           activeSection===1&&
           <section className="explanationSection">
             <div className="bartenderImgBig">
-              <img src={bartender==="Charlotte"?charlotte:(bartender==="Giancarlo"?giancarlo:julia)} alt="" />
+              <img src={bartender==="Charlotte"?charlotte:(bartender==="Giancarlo"?giancarlo:julia)} alt={bartender} />
             </div>
             <div className="explanation">
               <p>{bartender==="Charlotte"?explanation.english[0]:bartender==="Giancarlo"?explanation.italian[0]:explanation.german[0]}</p>
-              <input type="text" className="input" placeholder="Enter your name..." onChange={(e)=>setUserName(e.target.value)}/>
-              <button className="btn" onClick={()=>setExplanationVisibility("block")}>Say</button>
-              <div style={{display:explanationVisibility}}>
-                 <p>{explanation.english[1]}</p>
-                 <button className="btn" onClick={()=>setActiveSection(2)}>Got it!</button>
+              <input type="text" className="input" placeholder="Enter your name..." onChange={(e)=>changeUserName(e.target.value)}/>
+              <button className="btn" onClick={()=>setExplanationVisible("block")}>{bartender==="Charlotte"?"Say":bartender==="Giancarlo"?"Dire":"Sagen"}</button>
+              <div style={{display:explanationVisible}}>
+                 <p>{userName}, {bartender==="Charlotte"?explanation.english[1]:bartender==="Giancarlo"?explanation.italian[1]:explanation.german[1]}</p>
+                 <button className="btn yesBtn" onClick={()=>clickYes()}>{bartender==="Charlotte"?"Yes":bartender==="Giancarlo"?"Si":"Ja"}</button>
+                 <button className="btn noBtn" onClick={()=>clickNo()}>{bartender==="Julia"?"Nein":"No"}</button>
               </div>
-             
+              <div style={{display:explanation2Visible}}>
+                 <p>{answer==="yes"?(bartender==="Charlotte"?explanation.english[3]:bartender==="Giancarlo"?explanation.italian[3]:explanation.german[3]):answer==="no"&&(bartender==="Charlotte"?explanation.english[2]:bartender==="Giancarlo"?explanation.italian[2]:explanation.german[2])}</p>
+                 <button className="btn" onClick={()=>setActiveSection(2)}>{bartender==="Charlotte"?"Let's Try!":bartender==="Giancarlo"?"Proviamo":"Versuchen"}</button>
+              </div>
             </div>
           </section>
         }

@@ -1,14 +1,18 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { Link } from 'react-router-dom';
+import { GlobalContext } from '../context/GlobalState';
 
 const GetCategories = () => {
+    const {bartender} = useContext(GlobalContext)
     const [categoryData,setCategoryData]=useState([])
     const [drinksData, setDrinksData] = useState([])
     const [listVisibility, setListVisibility] = useState(0)
     const [scroll, setScroll] = useState("none")
+    const [activeBtn, setActiveBtn]=useState(0)
     const getCategories =()=>{
         fetchCategoryData();
-        setScroll("scroll")
+        setScroll("scroll");
+         setActiveBtn(1);
     }
     const fetchCategoryData = async () => {
       const res = await fetch(
@@ -20,7 +24,12 @@ const GetCategories = () => {
     const getDrinks =(data)=>{
         const filter = data.strCategory.replace(" ","_")
         fetchData2(filter);
-        setListVisibility(1)
+        setListVisibility(1);
+        setActiveBtn(2);
+    }
+    const returnCategories=()=>{
+      setListVisibility(0)
+      setActiveBtn(1)
     }
     const fetchData2 = async (filter) => {
       const res = await fetch(
@@ -32,7 +41,16 @@ const GetCategories = () => {
     
   return (
     <div className='dataPullingContainer'>
-        <button className='btn' onClick={()=>getCategories()}>Get the categories</button>
+      {
+        activeBtn===0?
+        <button className='btn' onClick={()=>getCategories()}>{bartender==="Charlotte"?"Get Categories":bartender==="Giancarlo"?"Ottieni categorie":"Kategorien Erhalten"}</button>
+        :activeBtn===1?
+        <button className='btn'>{bartender==="Charlotte"?"Select from List":bartender==="Giancarlo"?"Selezionare dall'elenco":"Wählen Sie aus der Liste aus"}</button>
+        :
+        <button className='btn' onClick={()=>returnCategories()}>{bartender==="Charlotte"?"Return to Categories":bartender==="Giancarlo"?"Ritorna a Categorie":"Zurück zu den Kategorien"}</button>
+      }
+        
+        
         {
           listVisibility===0&&
           <ul style={{overflowY:scroll}}>

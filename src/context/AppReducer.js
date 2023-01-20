@@ -5,6 +5,11 @@ export default (state, action) => {
         ...state,
         bartender: action.payload,
       };
+    case "CHANGE_USERNAME":
+      return {
+        ...state,
+        userName: action.payload,
+      };
     default:
       return { ...state };
   }
