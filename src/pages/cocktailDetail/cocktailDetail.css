@@ -1,0 +1,12 @@
+.drinkImg{
+    max-width:200px;
+    
+}
+
+h1{
+    text-align: center;
+}
+
+.cocktail div,table,img{
+    margin: 1rem;
+}

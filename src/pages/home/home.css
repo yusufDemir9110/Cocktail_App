@@ -75,9 +75,7 @@ body {
     margin:0.5rem 0;
 }
 .bartenderImg{
-    width:200px;
-    height: 200px;
-    overflow: hidden;
+    width:270px;
 }
 .bartenderImg img{
     width: 100%;
@@ -98,7 +96,6 @@ body {
 }
 .bartenderImgBig {
     margin: 0 1rem;
-    width: 25%;
 }
 
 .bartenderImgBig img {
