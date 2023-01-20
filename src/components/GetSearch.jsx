@@ -1,11 +1,15 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 
+
 const GetSearch = () => {
     const [data,setData]=useState(null)
     const [keyword, setKeyword] = useState("")
+    const [inputVisible, setInputVisible] = useState(false)
+    const [scroll, setScroll] = useState("none")
     const getSearch =()=>{
         fetchData();
+        setScroll("scroll")
     }
     const fetchData = async () => {
       const res = await fetch(
@@ -15,13 +19,16 @@ const GetSearch = () => {
       setData(json.drinks);
     };
   return (
-    <div>
-        <h3>Search for a specific cocktail</h3>
-          <div>
-            <input type="text" onChange={(e)=>setKeyword(e.target.value)}/>
-            <button type="button" onClick={()=>getSearch()}>Get</button>
+    <div className='dataPullingContainer searchContainer'>
+        <button className='btn searchSpecific' onClick={()=>setInputVisible(true)}>Search for a specific cocktail</button>
+        {
+          inputVisible&&
+          <div className='center'>
+            <input type="text" className='input' placeholder='Enter cocktail name...' onChange={(e)=>setKeyword(e.target.value)}/>
+            <button type="button" className='btn' onClick={()=>getSearch()}>Get</button>
           </div>
-          <ul>
+        }   
+          <ul style={{overflowY:scroll}}>
             {
               data!==null?data.map(data=>(
                 <li key={data.idDrink}>

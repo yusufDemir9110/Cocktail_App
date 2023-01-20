@@ -7,10 +7,10 @@ import GetSearch from "../../components/GetSearch";
 import lemonVideo from "../../assests/lemon.m4v"
 import charlotte from "../../assests/charlotte.png"
 import giancarlo from "../../assests/giancarlo.png"
-import anette from "../../assests/anette.png"
+import julia from "../../assests/julia.png"
 import english from "../../assests/United-Kingdom-Flag-icon.png"
 import italian from "../../assests/Italy-Flag-icon.png"
-import french from "../../assests/France-Flag-icon.png"
+import german from "../../assests/Germany-Flag-icon.png"
 import { explanation } from "../../explanation/explanation";
 
 const Home = () => {
@@ -54,14 +54,14 @@ const Home = () => {
               <img src={italian} className="flagImg" alt="Italy Flag" />
             </div>            
           </div>
-          <div onClick={()=>selectBartender("Anette")}>
+          <div onClick={()=>selectBartender("Julia")}>
             <div className="bartenderImg">
-              <img src={anette} alt="Bartender Anette" />
+              <img src={julia} alt="Bartender Julia" />
             </div>    
-            <h2>Anette</h2>
+            <h2>Julia</h2>
             <div className="language">
-              <h4>French </h4>
-              <img src={french} className="flagImg" alt="French Flag" />
+              <h4>German </h4>
+              <img src={german} className="flagImg" alt="German Flag" />
             </div>
           </div>
           </div>
@@ -72,15 +72,15 @@ const Home = () => {
           activeSection===1&&
           <section className="explanationSection">
             <div className="bartenderImgBig">
-              <img src={bartender==="Charlotte"?charlotte:(bartender==="Giancarlo"?giancarlo:anette)} alt="" />
+              <img src={bartender==="Charlotte"?charlotte:(bartender==="Giancarlo"?giancarlo:julia)} alt="" />
             </div>
             <div className="explanation">
-              <p>{bartender==="Charlotte"?explanation.english[0]:bartender==="Giancarlo"?explanation.italian[0]:explanation.french}</p>
-              <input type="text" onChange={(e)=>setUserName(e.target.value)}/>
-              <button onClick={()=>setExplanationVisibility("block")}>Say</button>
+              <p>{bartender==="Charlotte"?explanation.english[0]:bartender==="Giancarlo"?explanation.italian[0]:explanation.german[0]}</p>
+              <input type="text" className="input" placeholder="Enter your name..." onChange={(e)=>setUserName(e.target.value)}/>
+              <button className="btn" onClick={()=>setExplanationVisibility("block")}>Say</button>
               <div style={{display:explanationVisibility}}>
                  <p>{explanation.english[1]}</p>
-                 <button onClick={()=>setActiveSection(2)}>Got it!</button>
+                 <button className="btn" onClick={()=>setActiveSection(2)}>Got it!</button>
               </div>
              
             </div>
@@ -89,15 +89,9 @@ const Home = () => {
         {
           activeSection===2&&
           <section className="center dataSection">
-            <div className="bartenderImg">
-              <img src={charlotte} alt="Bartender Charlotte" />
-            </div>
-            <div className="center">
               <GetCategories/>
               <GetRandom/>
               <GetSearch/>
-            </div>
-          
         </section>
         }
       </main>    

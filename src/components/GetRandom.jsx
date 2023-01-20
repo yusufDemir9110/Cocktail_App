@@ -15,13 +15,17 @@ const GetRandom = () => {
     };
     
   return (
-    <div>
-        <h3 onClick={()=>getRandom()}>Get Random</h3>
-         <Link to={"/cocktail-detail"} state={data&&data[0].idDrink}>
-            {
-                data!==null&&data[0].strDrink
-            }
-        </Link>  
+    <div className='dataPullingContainer'>
+        <button className='btn' onClick={()=>getRandom()}>Get Random</button>
+         <ul>      
+            <li className='center'>
+              <Link to={"/cocktail-detail"} state={data&&data[0].idDrink}>
+                {
+                  data!==null&&data[0].strDrink
+                }
+              </Link> 
+            </li>        
+        </ul>      
     </div>
   )
 }
