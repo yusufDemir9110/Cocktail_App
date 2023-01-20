@@ -38,7 +38,6 @@ const CocktailDetail = () => {
       <main className="appContainer center">
         <button className="btn topRightBtn" onClick={()=>gotoHome()}>Go to Home</button>
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>
-        
         <section className="explanationSection">
             <div className="bartenderImgBig">
               <img src={bartender==="Charlotte"?charlotte:(bartender==="Giancarlo"?giancarlo:julia)} alt="" />

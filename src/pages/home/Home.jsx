@@ -17,7 +17,9 @@ const Home = () => {
   const{changeBartender, bartender} = useContext(GlobalContext)
   const [activeSection, setActiveSection] = useState(0)
   const [userName, setUserName]= useState("customer")
-  const [explanationVisibility, setExplanationVisibility] = useState("none")
+  const [explanationVisible, setExplanationVisible] = useState("none")
+  const [explanation2Visible, setExplanation2Visible] = useState("none")
+  const [explanation3Visible, setExplanation3Visible] = useState("none")
   const selectBartender =(bartender)=>{
     changeBartender(bartender)
     setActiveSection(1)
@@ -85,10 +87,21 @@ const Home = () => {
             <div className="explanation">
               <p>{bartender==="Charlotte"?explanation.english[0]:bartender==="Giancarlo"?explanation.italian[0]:explanation.german[0]}</p>
               <input type="text" className="input" placeholder="Enter your name..." onChange={(e)=>setUserName(e.target.value)}/>
-              <button className="btn" onClick={()=>setExplanationVisibility("block")}>Say</button>
-              <div style={{display:explanationVisibility}}>
-                 <p>{explanation.english[1]}</p>
+              <button className="btn" onClick={()=>setExplanationVisible("block")}>Say</button>
+              <div style={{display:explanationVisible}}>
+                 <p>{userName}, {bartender==="Charlotte"?explanation.english[1]:bartender==="Giancarlo"?explanation.italian[1]:explanation.german[1]}</p>
+                 <button className="btn" onClick={()=>setExplanation2Visible("block")}>Yes!</button>
+                 <button className="btn" onClick={()=>setExplanation3Visible("block")}>No!</button>
+              </div>
+              <div style={{display:explanation2Visible}}>
+                 <p>{bartender==="Charlotte"?explanation.english[2]:bartender==="Giancarlo"?explanation.italian[2]:explanation.german[2]}</p>
                  <button className="btn" onClick={()=>setActiveSection(2)}>Got it!</button>
+                
+              </div>
+              <div style={{display:explanation3Visible}}>
+                 <p>{bartender==="Charlotte"?explanation.english[3]:bartender==="Giancarlo"?explanation.italian[3]:explanation.german[3]}</p>
+                 <button className="btn" onClick={()=>setActiveSection(2)}>Got it!</button>
+                
               </div>
              
             </div>

@@ -10,3 +10,7 @@ h1{
 .cocktail div,table,img{
     margin: 1rem;
 }
+
+th, td{
+    padding:0.2rem 1rem;
+}
