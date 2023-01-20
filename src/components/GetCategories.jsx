@@ -2,23 +2,25 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
 
 const GetCategories = () => {
-    const [data,setData]=useState([])
+    const [categoryData,setCategoryData]=useState([])
     const [drinksData, setDrinksData] = useState([])
+    const [listVisibility, setListVisibility] = useState(0)
+    const [scroll, setScroll] = useState("none")
     const getCategories =()=>{
-        fetchData();
+        fetchCategoryData();
+        setScroll("scroll")
     }
-    const fetchData = async () => {
+    const fetchCategoryData = async () => {
       const res = await fetch(
         'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list',
       );
       const json = await res.json();
-      setData(json.drinks);
-      console.log(data)
+      setCategoryData(json.drinks);
     };
     const getDrinks =(data)=>{
         const filter = data.strCategory.replace(" ","_")
-        console.log(filter)
         fetchData2(filter);
+        setListVisibility(1)
     }
     const fetchData2 = async (filter) => {
       const res = await fetch(
@@ -26,21 +28,25 @@ const GetCategories = () => {
       );
       const json2 = await res.json();
       setDrinksData(json2.drinks);
-      console.log(drinksData)
     };
     
   return (
-    <div>
-        <h3 onClick={()=>getCategories()}>Get the categories</h3>
-        <ul>
+    <div className='dataPullingContainer'>
+        <button className='btn' onClick={()=>getCategories()}>Get the categories</button>
+        {
+          listVisibility===0&&
+          <ul style={{overflowY:scroll}}>
             {
-           data.map(data=>(
+           categoryData.map(data=>(
                 <li key={data.strCategory} onClick={()=>getDrinks(data)}>
                         {data.strCategory}
                 </li>))
             }
         </ul>
-        <ul>
+        }
+        {
+          listVisibility===1&&
+          <ul style={{overflowY:scroll}}>
             {drinksData&&
             drinksData.map(data=>(
                 <li key={data.idDrink}>
@@ -50,6 +56,8 @@ const GetCategories = () => {
                 </li>))
             }
         </ul>
+        }
+        
     </div>
   )
 }
