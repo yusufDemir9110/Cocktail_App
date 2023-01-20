@@ -1,16 +1,24 @@
 .drinkImg{
-    max-width:200px;
+    width:250px;
     
 }
 
-h1{
+.drinkTitle{
     text-align: center;
+    color:var(--color-yellow)
 }
 
-.cocktail div,table,img{
+
+
+.cocktail{
+    width:60%;
+}
+
+.cocktail div,table,.cocktail img{
     margin: 1rem;
 }
 
 th, td{
     padding:0.2rem 1rem;
+    color:var(--color-yellow)
 }

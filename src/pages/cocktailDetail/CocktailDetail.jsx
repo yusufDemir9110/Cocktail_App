@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import charlotte from "../../assests/charlotte.png"
 import giancarlo from "../../assests/giancarlo.png"
 import julia from "../../assests/julia.png"
-import { explanation } from "../../explanation/explanation";
 import { GlobalContext } from "../../context/GlobalState";
 import lemonVideo from "../../assests/lemon.m4v"
 import "./cocktailDetail.css"
@@ -13,7 +12,7 @@ const CocktailDetail = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const id = location.state
-  const{changeBartender, bartender} = useContext(GlobalContext)
+  const{bartender, userName, changeUserName} = useContext(GlobalContext)
   const fetchData = async () => {
       const res = await fetch(
         `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`,
@@ -23,6 +22,7 @@ const CocktailDetail = () => {
   };
 
   const gotoHome=()=>{
+    changeUserName("Customer")
     navigate("/")
   }
 
@@ -36,20 +36,20 @@ const CocktailDetail = () => {
       <video className="backgroundVideo" src={lemonVideo} autoPlay loop muted></video>
       <div className="videoOverlay"></div>
       <main className="appContainer center">
-        <button className="btn topRightBtn" onClick={()=>gotoHome()}>Go to Home</button>
+        <button className="btn topRightBtn" onClick={()=>gotoHome()}>{bartender==="Charlotte"?"Back to Home Page":bartender==="Giancarlo"?"Torna alla Pagina Iniziale":"Zurück zur Startseite"}</button>
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>
         <section className="explanationSection">
             <div className="bartenderImgBig">
               <img src={bartender==="Charlotte"?charlotte:(bartender==="Giancarlo"?giancarlo:julia)} alt="" />
             </div>
             <div className='cocktail'>
-              <h1>{data&&data.strDrink}</h1>
+              <h1 className='drinkTitle'>{data&&data.strDrink}</h1>
               <div className='center'>
                 <table>
                   <thead>
                     <tr>
-                      <th>Ingredints</th>
-                      <th>Measure</th>
+                      <th>{bartender==="Charlotte"?"Ingredients":bartender==="Giancarlo"?"Ingredienti":"Zutaten"}</th>
+                      <th>{bartender==="Charlotte"?"Measure":bartender==="Giancarlo"?"Misurare":"Messen"}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -74,7 +74,7 @@ const CocktailDetail = () => {
                 <img className='drinkImg' src={data&&data.strDrinkThumb} alt={data&&data.strDrink} />
               </div>
               <div>
-                <p>{data&&data.strInstructions}</p>
+                <p>{userName}, {data&&bartender==="Charlotte"?(data.strInstructions):data&&bartender==="Giancarlo"?(data.strInstructionsIT):data&&(data.strInstructionsDE)}</p>
               </div>
               
             </div>
