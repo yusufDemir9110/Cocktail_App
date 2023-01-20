@@ -53,20 +53,24 @@ body {
     -webkit-text-fill-color: transparent;
     color: var(--color-red);
     background-image: linear-gradient(90deg, var(--color-red), var(--color-yellow));
+    margin-bottom: 2rem;
 }
 .bartenderTitle{
     color:var(--color-yellow);
 }
 
-.selectBartender{
-    display: flex;
+.selectBartender{ 
     margin: 0 1rem;
 }
-.selectBartender div{
-    margin: 0 1rem;
+.selectBartender>div{
+    margin-top: 1rem;
+    display: flex;
+}
+.selectBartender>div>div {
+    margin: 0 2rem;
     cursor: pointer;
 }
-.selectBartender h2,h4 {
+.selectBartender h2,h3,h4 {
     text-align: center;
     margin:0.5rem 0;
 }
@@ -88,3 +92,25 @@ body {
     width:2rem;
     height: 2rem;
 }
+
+.explanationSection{
+    display: flex;
+}
+.bartenderImgBig {
+    margin: 0 1rem;
+    width: 25%;
+}
+
+.bartenderImgBig img {
+    width: 100%;
+
+}
+.explanation{
+    width:75%;
+    margin: 0 1rem;
+}
+
+.dataSection{
+    flex-direction: column;
+}
+
