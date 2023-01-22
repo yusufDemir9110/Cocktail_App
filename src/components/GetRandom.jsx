@@ -13,15 +13,24 @@ const GetRandom = () => {
       positionX:"",
       positionY:""
     })
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const getRandom =()=>{
         fetchData();
     }
     const fetchData = async () => {
-      const res = await fetch(
-        'https://www.thecocktaildb.com/api/json/v1/1/random.php',
-      );
-      const json = await res.json();
-      setData(json.drinks);
+      setIsLoading(true)
+      try{
+        const res = await fetch(
+          'https://www.thecocktaildb.com/api/json/v1/1/random.php',
+        );
+        const json = await res.json();
+        setData(json.drinks[0]);
+      }catch(error){
+        setError(error.toString())
+        setIsLoading(false)
+      }
+      setIsLoading(false)
     };
     useEffect(() => {
       const handleMouseMove = (event)=>{
@@ -48,12 +57,14 @@ const GetRandom = () => {
   return (
     <div className='dataPullingContainer'>
         <button className='btn' onClick={()=>getRandom()}>{bartender==="Charlotte"?"Get Random Drink":bartender==="Giancarlo"?"Ottieni una bevanda casuale":"Holen Sie sich ein zufälliges Getränk"}</button>
-         <ul>      
-            <li className='center' onMouseOver={()=>getLittleInfoData(data[0])} onMouseLeave={(prev)=>setLittleInfo({...prev, display:"none"})}>
+         <ul> 
+            {isLoading&&<li className='loading'>...Loading</li>}
+            {error!==null&&<li className='error'>Something went wrong! {error}</li>}     
+            <li className='center' onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={(prev)=>setLittleInfo({...prev, display:"none"})}>
               <LittleInfo littleInfo={littleInfo}/>
-              <Link to={"/cocktail-detail"} state={data&&data[0].idDrink}>
+              <Link to={"/cocktail-detail"} state={data&&data.idDrink}>
                 {
-                  data!==null&&data[0].strDrink
+                  data!==null&&data.strDrink
                 }
               </Link> 
             </li>        
