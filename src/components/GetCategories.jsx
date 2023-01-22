@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../context/GlobalState';
 
@@ -9,6 +9,13 @@ const GetCategories = () => {
     const [listVisibility, setListVisibility] = useState(0)
     const [scroll, setScroll] = useState("none")
     const [activeBtn, setActiveBtn]=useState(0)
+    const [littleInfoPosition, setLittleInfoPosition] = useState({
+      x:"",
+      y:""
+    })
+    const [littleInfoImgSrc, setLittleInfoImgSrc] =useState(null)
+    const [littleInfoDrinkName, setLittleInfoDrinkName] =useState(null)
+    const [littleInfoDisplay, setLittleInfoDisplay] = useState("none")
     const getCategories =()=>{
         fetchCategoryData();
         setScroll("scroll");
@@ -38,6 +45,28 @@ const GetCategories = () => {
       const json2 = await res.json();
       setDrinksData(json2.drinks);
     };
+
+    const getLittleInfoData =(data)=>{
+      setLittleInfoDisplay("flex")
+      const imgSrc = data.strDrinkThumb
+      setLittleInfoImgSrc(imgSrc)
+      const drinkName = data.strDrink
+      setLittleInfoDrinkName(drinkName)
+    }
+    useEffect(() => {
+      const handleMouseMove = (event)=>{
+        setLittleInfoPosition({x:event.clientX-80, y:event.clientY-80})
+      }
+      window.addEventListener("mousemove", handleMouseMove)
+      
+      return () => {
+      window.removeEventListener(
+        'mousemove',
+        handleMouseMove
+      );
+    };
+    }, [])
+    
     
   return (
     <div className='dataPullingContainer'>
@@ -64,18 +93,25 @@ const GetCategories = () => {
         }
         {
           listVisibility===1&&
-          <ul style={{overflowY:scroll}}>
-            {drinksData&&
-            drinksData.map(data=>(
-                <li key={data.idDrink}>
+          <div>
+            
+            <ul style={{overflowY:scroll}}>
+              {drinksData&&
+                drinksData.map(data=>(
+                  <li key={data.idDrink} onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={()=>setLittleInfoDisplay("none")}>
+                    <div className='littleInfo' style={{display:littleInfoDisplay,top:`${littleInfoPosition.y}px`,left:`${littleInfoPosition.x}px`}}>
+                      <img src={littleInfoImgSrc} alt="sc"/>
+                      <h4>{littleInfoDrinkName}</h4>
+                      
+                    </div>
                     <Link to={"/cocktail-detail"} state={data.idDrink}>
                         {data.strDrink}
                     </Link> 
-                </li>))
-            }
-        </ul>
-        }
-        
+                  </li>))
+              }
+            </ul>
+          </div>
+        }      
     </div>
   )
 }

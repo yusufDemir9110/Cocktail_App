@@ -211,3 +211,16 @@ body {
     width:130px;
 }
 
+.littleInfo{
+    width:200px;
+    height:220px;
+    background-color: black;
+    position: absolute;
+    flex-direction: column;
+}
+
+.littleInfo img{
+    width: 150px;
+    margin:0.2rem auto;
+}
+
