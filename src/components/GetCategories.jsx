@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../context/GlobalState';
+import LittleInfo from './LittleInfo';
 
 const GetCategories = () => {
     const {bartender} = useContext(GlobalContext)
@@ -9,13 +10,27 @@ const GetCategories = () => {
     const [listVisibility, setListVisibility] = useState(0)
     const [scroll, setScroll] = useState("none")
     const [activeBtn, setActiveBtn]=useState(0)
-    const [littleInfoPosition, setLittleInfoPosition] = useState({
-      x:"",
-      y:""
+    const [littleInfo, setLittleInfo] = useState({
+      imgSrc:"",
+      drinkName:"",
+      display:"none",
+      positionX:"",
+      positionY:""
     })
-    const [littleInfoImgSrc, setLittleInfoImgSrc] =useState(null)
-    const [littleInfoDrinkName, setLittleInfoDrinkName] =useState(null)
-    const [littleInfoDisplay, setLittleInfoDisplay] = useState("none")
+    useEffect(() => {
+      const handleMouseMove = (event)=>{
+        setLittleInfo((prev)=>({...prev, positionX:event.clientX-80, positionY:event.clientY-80}))
+      }
+      window.addEventListener("mousemove", handleMouseMove)
+      
+      return () => {
+      window.removeEventListener(
+        'mousemove',
+        handleMouseMove
+      );
+    };
+    }, [])
+    
     const getCategories =()=>{
         fetchCategoryData();
         setScroll("scroll");
@@ -47,27 +62,12 @@ const GetCategories = () => {
     };
 
     const getLittleInfoData =(data)=>{
-      setLittleInfoDisplay("flex")
+      setLittleInfo((prev)=>({...prev, display:"flex"}))
       const imgSrc = data.strDrinkThumb
-      setLittleInfoImgSrc(imgSrc)
+      setLittleInfo((prev)=>({...prev, imgSrc}))
       const drinkName = data.strDrink
-      setLittleInfoDrinkName(drinkName)
+      setLittleInfo((prev)=>({...prev, drinkName}))
     }
-    useEffect(() => {
-      const handleMouseMove = (event)=>{
-        setLittleInfoPosition({x:event.clientX-80, y:event.clientY-80})
-      }
-      window.addEventListener("mousemove", handleMouseMove)
-      
-      return () => {
-      window.removeEventListener(
-        'mousemove',
-        handleMouseMove
-      );
-    };
-    }, [])
-    
-    
   return (
     <div className='dataPullingContainer'>
       {
@@ -98,12 +98,8 @@ const GetCategories = () => {
             <ul style={{overflowY:scroll}}>
               {drinksData&&
                 drinksData.map(data=>(
-                  <li key={data.idDrink} onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={()=>setLittleInfoDisplay("none")}>
-                    <div className='littleInfo' style={{display:littleInfoDisplay,top:`${littleInfoPosition.y}px`,left:`${littleInfoPosition.x}px`}}>
-                      <img src={littleInfoImgSrc} alt="sc"/>
-                      <h4>{littleInfoDrinkName}</h4>
-                      
-                    </div>
+                  <li key={data.idDrink} onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={(prev)=>setLittleInfo({...prev, display:"none"})}>
+                    <LittleInfo littleInfo={littleInfo}/>
                     <Link to={"/cocktail-detail"} state={data.idDrink}>
                         {data.strDrink}
                     </Link> 
