@@ -17,6 +17,8 @@ const GetCategories = () => {
       positionX:"",
       positionY:""
     })
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
       const handleMouseMove = (event)=>{
         setLittleInfo((prev)=>({...prev, positionX:event.clientX-80, positionY:event.clientY-80}))
@@ -37,15 +39,23 @@ const GetCategories = () => {
          setActiveBtn(1);
     }
     const fetchCategoryData = async () => {
-      const res = await fetch(
+      setIsLoading(true)
+      try {
+        const res = await fetch(
         'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list',
-      );
-      const json = await res.json();
-      setCategoryData(json.drinks);
+        );
+        const categoryJson = await res.json();
+        setCategoryData(categoryJson.drinks);
+      } catch (error) {
+        setError(error.toString())
+        setIsLoading(false)
+      }
+      setIsLoading(false)
+      
     };
     const getDrinks =(data)=>{
         const filter = data.strCategory.replace(" ","_")
-        fetchData2(filter);
+        fetchDrinkData(filter);
         setListVisibility(1);
         setActiveBtn(2);
     }
@@ -53,12 +63,19 @@ const GetCategories = () => {
       setListVisibility(0)
       setActiveBtn(1)
     }
-    const fetchData2 = async (filter) => {
-      const res = await fetch(
+    const fetchDrinkData = async (filter) => {
+      setIsLoading(true)
+      try {
+        const res = await fetch(
         `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filter}`,
-      );
-      const json2 = await res.json();
-      setDrinksData(json2.drinks);
+        );
+        const drinkJson = await res.json();
+        setDrinksData(drinkJson.drinks);
+      } catch (error) {
+        setIsLoading(false)
+        setError(error.toString())
+      }
+      setIsLoading(false)
     };
 
     const getLittleInfoData =(data)=>{
@@ -83,12 +100,15 @@ const GetCategories = () => {
         {
           listVisibility===0&&
           <ul style={{overflowY:scroll}}>
+            {isLoading&&<li className='loading'>...Loading</li>}
+            {error!==null&&<li className='error'>Something went wrong! {error}</li>}
             {
-           categoryData.map(data=>(
+             categoryData.map(data=>(
                 <li key={data.strCategory} onClick={()=>getDrinks(data)}>
                         {data.strCategory}
                 </li>))
             }
+           
         </ul>
         }
         {
@@ -96,7 +116,10 @@ const GetCategories = () => {
           <div>
             
             <ul style={{overflowY:scroll}}>
-              {drinksData&&
+              {isLoading&&<li className='loading'>...Loading</li>}
+              {error!==null&&<li className='error'>Something went wrong! {error}</li>}
+              {
+                drinksData&&
                 drinksData.map(data=>(
                   <li key={data.idDrink} onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={(prev)=>setLittleInfo({...prev, display:"none"})}>
                     <LittleInfo littleInfo={littleInfo}/>

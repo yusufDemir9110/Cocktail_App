@@ -101,8 +101,8 @@ const Home = () => {
               <button className="btn" onClick={()=>setExplanationVisible("block")}>{bartender==="Charlotte"?"Say":bartender==="Giancarlo"?"Dire":"Sagen"}</button>
               <div style={{display:explanationVisible}}>
                  <p>{userName}, {bartender==="Charlotte"?explanation.english[1]:bartender==="Giancarlo"?explanation.italian[1]:explanation.german[1]}</p>
-                 <button className="btn yesBtn" onClick={()=>clickYes()}>{bartender==="Charlotte"?"Yes":bartender==="Giancarlo"?"Si":"Ja"}</button>
                  <button className="btn noBtn" onClick={()=>clickNo()}>{bartender==="Julia"?"Nein":"No"}</button>
+                 <button className="btn yesBtn" onClick={()=>clickYes()}>{bartender==="Charlotte"?"Yes":bartender==="Giancarlo"?"Si":"Ja"}</button>                
               </div>
               <div style={{display:explanation2Visible}}>
                  <p>{answer==="yes"?(bartender==="Charlotte"?explanation.english[3]:bartender==="Giancarlo"?explanation.italian[3]:explanation.german[3]):answer==="no"&&(bartender==="Charlotte"?explanation.english[2]:bartender==="Giancarlo"?explanation.italian[2]:explanation.german[2])}</p>

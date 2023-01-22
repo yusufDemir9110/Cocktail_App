@@ -134,7 +134,7 @@ body {
 
 .dataPullingContainer ul{
     height: 250px;
-    min-width:250px;
+    width:260px;
     padding-left: 0;
 }
 
@@ -194,10 +194,10 @@ body {
 }
 
 .yesBtn{
-    margin-right: 0.5rem;
+    margin-left: 0.5rem;
 }
 .noBtn {
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 
@@ -222,5 +222,15 @@ body {
 .littleInfo img{
     width: 150px;
     margin:0.2rem auto;
+}
+
+.loading{
+    pointer-events: none;
+}
+
+.error{
+    pointer-events: none;
+    color:var(--color-red) !important;
+    font-weight: 600;
 }
 

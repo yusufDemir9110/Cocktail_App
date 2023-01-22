@@ -6,7 +6,7 @@ import LittleInfo from './LittleInfo';
 
 const GetSearch = () => {
     const {bartender} = useContext(GlobalContext)
-    const [data,setData]=useState(null)
+    const [data,setData]=useState([])
     const [keyword, setKeyword] = useState("")
     const [inputVisible, setInputVisible] = useState(false)
     const [scroll, setScroll] = useState("none")
@@ -17,20 +17,29 @@ const GetSearch = () => {
       positionX:"",
       positionY:""
     })
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const getSearch =()=>{
         fetchData();
         setScroll("scroll")
     }
     const fetchData = async () => {
-      const res = await fetch(
+      setIsLoading(true)
+      try {
+        const res = await fetch(
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${keyword}`,
       );
       const json = await res.json();
       setData(json.drinks);
+      } catch (error) {
+        setError(error.toString())
+        setIsLoading(false)
+      }
+      setIsLoading(false)
     };
      useEffect(() => {
       const handleMouseMove = (event)=>{
-        setLittleInfo((prev)=>({...prev, positionX:event.clientX-300, positionY:event.clientY-80}))
+        setLittleInfo((prev)=>({...prev, positionX:event.clientX-80, positionY:event.clientY-80}))
       }
       window.addEventListener("mousemove", handleMouseMove)
       
@@ -60,6 +69,8 @@ const GetSearch = () => {
           </div>
         }   
           <ul style={{overflowY:scroll}}>
+            {isLoading&&<li className='loading'>...Loading</li>}
+            {error!==null&&<li className='error'>Something went wrong! {error}</li>}
             {
               data!==null?data.map(data=>(
                 <li key={data.idDrink} onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={(prev)=>setLittleInfo({...prev, display:"none"})}>
@@ -68,7 +79,7 @@ const GetSearch = () => {
                     {data.strDrink}
                   </Link>
                 </li>
-              )):null
+              )):<li className='loading'>There is no match!</li>
             }
         </ul>
     </div>
