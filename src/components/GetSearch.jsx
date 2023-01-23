@@ -69,7 +69,7 @@ const GetSearch = () => {
         {
           inputVisible&&
           <div className='search'>
-            <input type="text" className='input' placeholder='Enter cocktail name...' onChange={(e)=>setKeyword(e.target.value)}/>
+            <input type="text" className='input' placeholder={bartender==="Charlotte"?"Search...":bartender==="Giancarlo"?"Ricerca...":"Suche..."} onChange={(e)=>setKeyword(e.target.value)}/>
             <button type="button" className='btn' onClick={()=>getSearch()}>Get</button>
           </div>
         }   

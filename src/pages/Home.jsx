@@ -97,7 +97,7 @@ const Home = () => {
             </div>
             <div className="explanation">
               <p>{bartender==="Charlotte"?explanation.english[0]:bartender==="Giancarlo"?explanation.italian[0]:explanation.german[0]}</p>
-              <input type="text" className="input" placeholder="Enter your name..." onChange={(e)=>changeUserName(e.target.value)}/>
+              <input type="text" className="input" placeholder={bartender==="Charlotte"?"Enter your name...":bartender==="Giancarlo"?"Inserisci il tuo nome...":"gib deinen Namen ein"} onChange={(e)=>changeUserName(e.target.value)}/>
               <button className="btn" onClick={()=>setExplanationVisible("block")}>{bartender==="Charlotte"?"Say":bartender==="Giancarlo"?"Dire":"Sagen"}</button>
               <div style={{display:explanationVisible}}>
                  <p>{userName}, {bartender==="Charlotte"?explanation.english[1]:bartender==="Giancarlo"?explanation.italian[1]:explanation.german[1]}</p>
