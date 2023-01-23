@@ -35,6 +35,10 @@ const CocktailDetail = () => {
     navigate("/")
   }
 
+  const gotoSelection =()=>{
+    navigate("/",{state:2})
+  }
+
   useEffect(()=>{
     const newData = fetchData()
     setData(newData)
@@ -45,7 +49,8 @@ const CocktailDetail = () => {
       <video className="backgroundVideo" src={lemonVideo} autoPlay loop muted></video>
       <div className="videoOverlay"></div>
       <main className="appContainer">
-        <button className="btn topRightBtn" onClick={()=>gotoHome()}>{bartender==="Charlotte"?"Back to Home Page":bartender==="Giancarlo"?"Torna alla Pagina Iniziale":"Zurück zur Startseite"}</button>
+        <button className="btn topLeftBtn" onClick={()=>gotoSelection()}>{bartender==="Charlotte"?"Back to Selection":bartender==="Giancarlo"?"Torna alla Selezione":"Zurück zur Auswahl"}</button>
+        <button className="btn topRightBtn" onClick={()=>gotoHome()}>{bartender==="Charlotte"?"Back to Home Page":bartender==="Giancarlo"?"Torna alla Iniziale":"Zurück zur Startseite"}</button>
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>
         <section className="explanationSection">
             <div className="bartenderImgBig">
