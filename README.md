@@ -1,6 +1,8 @@
 # Cocktail_App
 
-This app created via React. TheCocktailDB is used for API. [Check here for API](https://www.thecocktaildb.com/api.php)
+This app created via React. [Click here for check App](https://63ce85bfd72c9d16bbcd4356--guileless-strudel-cac370.netlify.app/)
+
+TheCocktailDB is used for API. [Clcik here for check API](https://www.thecocktaildb.com/api.php)
 
 ## Using
 In homepage, user can select the bartender for language. English, Italian or German. 
