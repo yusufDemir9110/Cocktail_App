@@ -12,13 +12,16 @@ import italian from "../assests/Italy-Flag-icon.png"
 import german from "../assests/Germany-Flag-icon.png"
 import { explanation } from "../explanation/explanation";
 import "../style.css"
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
   const {changeBartender, bartender, changeUserName, userName} = useContext(GlobalContext)
-  const [activeSection, setActiveSection] = useState(0)
+  const location = useLocation()
+  const [activeSection, setActiveSection] = useState(location.state?location.state:0)
   const [explanationVisible, setExplanationVisible] = useState("none")
   const [explanation2Visible, setExplanation2Visible] = useState("none")
   const [answer,setAnswer] = useState("")
+  
   const selectBartender =(bartender)=>{
     changeBartender(bartender)
     setActiveSection(1)
@@ -44,7 +47,7 @@ const Home = () => {
       <main className="appContainer">
         {
           activeSection!==0&&
-          <button className="btn topRightBtn" onClick={()=>gotoPrevious()}>{bartender==="Charlotte"?"Previous":bartender==="Giancarlo"?"Precedente":"Vorherige"}</button>
+          <button className="btn topLeftBtn" onClick={()=>gotoPrevious()}>{bartender==="Charlotte"?"Previous":bartender==="Giancarlo"?"Precedente":"Vorherige"}</button>
         }   
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>      
         {
