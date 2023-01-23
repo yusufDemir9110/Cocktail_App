@@ -19,6 +19,7 @@ const GetSearch = () => {
     })
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [innerWidth, setInnerWidth] = useState(null)
     const getSearch =()=>{
         fetchData();
         setScroll("scroll")
@@ -38,8 +39,10 @@ const GetSearch = () => {
       setIsLoading(false)
     };
      useEffect(() => {
+      const windowWidth = window.innerWidth
+      setInnerWidth(windowWidth)
       const handleMouseMove = (event)=>{
-        setLittleInfo((prev)=>({...prev, positionX:event.clientX-80, positionY:event.clientY-80}))
+        setLittleInfo((prev)=>({...prev, positionX:event.clientX-100, positionY:event.clientY<400?event.clientY-40:event.clientY-300}))
       }
       window.addEventListener("mousemove", handleMouseMove)
       
@@ -52,7 +55,9 @@ const GetSearch = () => {
     }, [])
 
     const getLittleInfoData =(data)=>{
-      setLittleInfo((prev)=>({...prev, display:"flex"}))
+      if(innerWidth>1196){
+        setLittleInfo((prev)=>({...prev, display:"flex"}))
+      }
       const imgSrc = data.strDrinkThumb
       setLittleInfo((prev)=>({...prev, imgSrc}))
       const drinkName = data.strDrink
@@ -63,7 +68,7 @@ const GetSearch = () => {
         <button className='btn searchSpecific' onClick={()=>setInputVisible(true)}>{bartender==="Charlotte"?"Search Drink":bartender==="Giancarlo"?"Cerca Bevanda":"Getränk suchen"}</button>
         {
           inputVisible&&
-          <div className='center'>
+          <div className='search'>
             <input type="text" className='input' placeholder='Enter cocktail name...' onChange={(e)=>setKeyword(e.target.value)}/>
             <button type="button" className='btn' onClick={()=>getSearch()}>Get</button>
           </div>

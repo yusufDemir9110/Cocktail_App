@@ -21,8 +21,9 @@ const GetCategories = () => {
     const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
       const handleMouseMove = (event)=>{
-        setLittleInfo((prev)=>({...prev, positionX:event.clientX-80, positionY:event.clientY-80}))
+        setLittleInfo((prev)=>({...prev, positionX:event.clientX-100, positionY:event.clientY<400?event.clientY-40:event.clientY-300}))
       }
+
       window.addEventListener("mousemove", handleMouseMove)
       
       return () => {

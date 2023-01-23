@@ -1,7 +1,6 @@
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/home/Home";
-import CocktailDetail from "./pages/cocktailDetail/CocktailDetail";
+import Home from "./pages/Home";
+import CocktailDetail from "./pages/CocktailDetail";
 import { GlobalProvider } from "./context/GlobalState";
 
 function App() {
