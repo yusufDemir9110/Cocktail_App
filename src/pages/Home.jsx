@@ -1,18 +1,17 @@
 import React, { useContext, useState } from "react";
-import "./home.css"
-import { GlobalContext } from "../../context/GlobalState";
-import GetCategories from "../../components/GetCategories";
-import GetRandom from "../../components/GetRandom";
-import GetSearch from "../../components/GetSearch";
-import lemonVideo from "../../assests/lemon.m4v"
-import charlotte from "../../assests/charlotte.png"
-import giancarlo from "../../assests/giancarlo.png"
-import julia from "../../assests/julia.png"
-import english from "../../assests/United-Kingdom-Flag-icon.png"
-import italian from "../../assests/Italy-Flag-icon.png"
-import german from "../../assests/Germany-Flag-icon.png"
-import { explanation } from "../../explanation/explanation";
-
+import { GlobalContext } from "../context/GlobalState";
+import GetCategories from "../components/GetCategories";
+import GetRandom from "../components/GetRandom";
+import GetSearch from "../components/GetSearch";
+import lemonVideo from "../assests/lemon.m4v"
+import charlotte from "../assests/charlotte.png"
+import giancarlo from "../assests/giancarlo.png"
+import julia from "../assests/julia.png"
+import english from "../assests/United-Kingdom-Flag-icon.png"
+import italian from "../assests/Italy-Flag-icon.png"
+import german from "../assests/Germany-Flag-icon.png"
+import { explanation } from "../explanation/explanation";
+import "../style.css"
 
 const Home = () => {
   const {changeBartender, bartender, changeUserName, userName} = useContext(GlobalContext)
@@ -39,32 +38,30 @@ const Home = () => {
     setAnswer("no")
   }
   return (
-    <div className="container center">
+    <div className="container">
       <video className="backgroundVideo" src={lemonVideo} autoPlay loop muted></video>
       <div className="videoOverlay"></div>
-      <main className="appContainer center">
+      <main className="appContainer">
         {
           activeSection!==0&&
           <button className="btn topRightBtn" onClick={()=>gotoPrevious()}>{bartender==="Charlotte"?"Previous":bartender==="Giancarlo"?"Precedente":"Vorherige"}</button>
-        }
-        
-        <h1 className="appTitle">Vodafone Ziggo Bar</h1>
-        
+        }   
+        <h1 className="appTitle">Vodafone Ziggo Bar</h1>      
         {
           activeSection===0&&
           <section className="selectBartender">
           <h3 className="bartenderTitle">Please Select Bartender</h3>
-          <div>
-            <div onClick={()=>selectBartender("Charlotte")}>
-            <div className="bartenderImg">
-              <img src={charlotte} alt="Bartender Charlotte" />
-            </div>             
-            <h2>Charlotte</h2>
-            <div className="language">
-              <h4>English </h4>
-              <img src={english} className="flagImg" alt="United Kingdom Flag" /> 
-            </div>            
-          </div>
+            <div>
+              <div onClick={()=>selectBartender("Charlotte")}>
+                <div className="bartenderImg">
+                  <img src={charlotte} alt="Bartender Charlotte" />
+                </div>             
+                <h2>Charlotte</h2>
+                <div className="language">
+                  <h4>English </h4>
+                  <img src={english} className="flagImg" alt="United Kingdom Flag" /> 
+                </div>            
+              </div>
           <div onClick={()=>selectBartender("Giancarlo")}>
             <div className="bartenderImg">
               <img src={giancarlo} alt="Bartender Giancarlo" />
@@ -113,7 +110,7 @@ const Home = () => {
         }
         {
           activeSection===2&&
-          <section className="center dataSection">
+          <section className="dataSection">
               <GetCategories/>
               <GetRandom/>
               <GetSearch/>

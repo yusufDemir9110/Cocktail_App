@@ -11,7 +11,7 @@ const GetRandom = () => {
       drinkName:"",
       display:"none",
       positionX:"",
-      positionY:""
+      positionY:"40"
     })
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -32,19 +32,7 @@ const GetRandom = () => {
       }
       setIsLoading(false)
     };
-    useEffect(() => {
-      const handleMouseMove = (event)=>{
-        setLittleInfo((prev)=>({...prev, positionX:event.clientX-80, positionY:event.clientY-80}))
-      }
-      window.addEventListener("mousemove", handleMouseMove)
-      
-      return () => {
-      window.removeEventListener(
-        'mousemove',
-        handleMouseMove
-      );
-    };
-    }, [])
+    
 
     const getLittleInfoData =(data)=>{
       setLittleInfo((prev)=>({...prev, display:"flex"}))
@@ -60,7 +48,7 @@ const GetRandom = () => {
          <ul> 
             {isLoading&&<li className='loading'>...Loading</li>}
             {error!==null&&<li className='error'>Something went wrong! {error}</li>}     
-            <li className='center' onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={(prev)=>setLittleInfo({...prev, display:"none"})}>
+            <li className='randomLi' onMouseOver={()=>getLittleInfoData(data)} onMouseLeave={(prev)=>setLittleInfo({...prev, display:"none"})}>
               <LittleInfo littleInfo={littleInfo}/>
               <Link to={"/cocktail-detail"} state={data&&data.idDrink}>
                 {

@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import charlotte from "../../assests/charlotte.png"
-import giancarlo from "../../assests/giancarlo.png"
-import julia from "../../assests/julia.png"
-import { GlobalContext } from "../../context/GlobalState";
-import lemonVideo from "../../assests/lemon.m4v"
-import "./cocktailDetail.css"
+import charlotte from "../assests/charlotte.png"
+import giancarlo from "../assests/giancarlo.png"
+import julia from "../assests/julia.png"
+import { GlobalContext } from "../context/GlobalState";
+import lemonVideo from "../assests/lemon.m4v"
+import "../style.css"
 
 const CocktailDetail = () => {
   const [data, setData] = useState(null)
@@ -41,10 +41,10 @@ const CocktailDetail = () => {
   },[])
 
   return (
-    <div className="container center">
+    <div className="container">
       <video className="backgroundVideo" src={lemonVideo} autoPlay loop muted></video>
       <div className="videoOverlay"></div>
-      <main className="appContainer center">
+      <main className="appContainer">
         <button className="btn topRightBtn" onClick={()=>gotoHome()}>{bartender==="Charlotte"?"Back to Home Page":bartender==="Giancarlo"?"Torna alla Pagina Iniziale":"Zurück zur Startseite"}</button>
         <h1 className="appTitle">Vodafone Ziggo Bar</h1>
         <section className="explanationSection">
@@ -56,7 +56,7 @@ const CocktailDetail = () => {
             {!isLoading&&error===null&&
             <div className='cocktail'>
               <h1 className='drinkTitle'>{data&&data.strDrink}</h1>
-              <div className='center'>
+              <div className='tableIngredients'>
                 <table>
                   <thead>
                     <tr>
@@ -83,7 +83,9 @@ const CocktailDetail = () => {
                     </tr>
                   </tbody>
                 </table>
-                <img className='drinkImg' src={data&&data.strDrinkThumb} alt={data&&data.strDrink} />
+                <div className='cocktailImgContainer'>
+                  <img className='drinkImg' src={data&&data.strDrinkThumb} alt={data&&data.strDrink} />
+                </div> 
               </div>
               <div>
                 <p>{userName}, {data&&bartender==="Charlotte"?(data.strInstructions):data&&bartender==="Giancarlo"?(data.strInstructionsIT):data&&(data.strInstructionsDE)}</p>
