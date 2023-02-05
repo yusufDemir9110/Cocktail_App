@@ -49,7 +49,7 @@ const Home = () => {
           activeSection!==0&&
           <button className="btn topLeftBtn" onClick={()=>gotoPrevious()}>{bartender==="Charlotte"?"Previous":bartender==="Giancarlo"?"Precedente":"Vorherige"}</button>
         }   
-        <h1 className="appTitle">Vodafone Ziggo Bar</h1>      
+        <h1 className="appTitle">Yusuf's Bar</h1>      
         {
           activeSection===0&&
           <section className="selectBartender">
